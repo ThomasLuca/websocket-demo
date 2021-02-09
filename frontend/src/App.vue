@@ -18,13 +18,15 @@ export default defineComponent({
       connection: null as null | WebSocket,
       hostname: "-",
       counter: 0,
-      url:""
+      url:"",
+      port:""
     }
   },
   mounted() {
     this.url = process.env.VUE_APP_HOSTNAME
-    console.log(`connectet to: ws://${this.url}:3000`)
-    this.connection = new WebSocket(`ws://${this.url}:3000`)
+    this.port = process.env.VUE_APP_PORT
+    console.log(`connectet to: ws://${this.url}:${this.port}`)
+    this.connection = new WebSocket(`ws://${this.url}:${this.port}`)
     this.connection.onmessage = (packet) => {
       const message = JSON.parse(packet.data)
       console.log(message)
