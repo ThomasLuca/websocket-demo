@@ -1,50 +1,30 @@
 <template>
-  <h1>IoT Apps demo</h1>
-  <h4>Hostname: {{hostname}}</h4>
-  <p>Counter: {{counter}}</p>
-  <button class="btn" @click="resetCounter">Reset Counter</button>
+  <div>
+    <nav class="navbar">
+      <div class="wrapper">
+        <ul>
+          <li><router-link to="/">Sensors</router-link></li>
+          <li><router-link to="/settings">Settings</router-link></li>
+          <li><router-link to="/system-info">Info</router-link></li>
+          <li id="identifier"> ⚡ {{hostname || 'not connected'}}</li>
+        </ul> 
+      </div>
+    </nav>
+    <div class="container">
+      <router-view></router-view>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
 export default defineComponent({
   name: 'App',
   components: {
-
   },
-  data() {
-    return {
-      connection: null as null | WebSocket,
-      hostname: "-",
-      counter: 0,
-      url:"",
-      port:""
-    }
-  },
-  mounted() {
-    this.url = process.env.VUE_APP_HOSTNAME
-    this.port = process.env.VUE_APP_PORT
-    console.log(`connectet to: ws://${this.url}:${this.port}`)
-    this.connection = new WebSocket(`ws://${this.url}:${this.port}`)
-    this.connection.onmessage = (packet) => {
-      const message = JSON.parse(packet.data)
-      console.log(message)
-
-      switch(message.message) {
-        case 'hostname':
-          this.hostname = message.value
-          break;
-        case 'counter':
-          this.counter = message.value
-          break
-      }
-    }
-  },
-  methods: {
-    resetCounter() {
-      this.connection?.send('reset')
-
+  computed: {
+    hostname() {
+      return this.$store.state.hostname
     }
   }
 });
@@ -57,6 +37,39 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
+.navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #2C3E50;
+}
+
+.navbar li , .navbar li > *{
+  display: inline;
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 28px;
+}
+
+#identifier {
+  color: #2C3E50;
+  float: right;
+  cursor: default;
+  background-color: #26A69A;
+}
+
+.container{
+  width: 80%;
+}
+
+p, a{
+  font-size: 32px;
+}
+
 </style>
