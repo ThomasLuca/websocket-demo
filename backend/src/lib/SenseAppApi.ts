@@ -18,47 +18,6 @@ export default class SenseAppApi extends EventEmitter {
     this.client!.addListener('data', this.onData.bind(this))
   }
 
-  // getSettings = () => {
-  //   this.send({"get": ["settings"]})
-  // }
-  
-  // getSystemInfo() {
-  //   this.send({"get": ["system_info"]})
-  // }
-  
-  // updateWantedTemperature(temperature: number) {
-  //   const data = {
-  //     post: {
-  //       settings: {
-  //         wanted_temperature: temperature,
-  //       }
-  //     }
-  //   }
-  //   this.send(data)
-  // }
-  
-  // updateWantedTemperatureRange(range: number) {
-  //   const data = {
-  //     post: {
-  //       settings: {
-  //         wanted_temperature_range: range,
-  //       }
-  //     }
-  //   }
-  //   this.send(data)
-  // }
-
-  // updateBrightness(range: number) {
-  //   const data = {
-  //     post: {
-  //       settings: {
-  //         brightness: range,
-  //       }
-  //     }
-  //   }
-  //   this.send(data)
-  // }
-
   send(data: object) {
     if(this.client) {
       this.client.write(JSON.stringify(data))

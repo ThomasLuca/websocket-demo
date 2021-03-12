@@ -16,26 +16,11 @@ app.get('/', (request: Request, response: Response) => {
 wss.on('connection', (client: WebSocket) => {
 
     console.log('WebSocket connection...')
-    // if(msg.message == "brightness"){
-    //     console.log("Changed Brightness");
-    //     api.updateBrightness(parseInt(msg.value));
-    // }
 
     client.on('message', (message: string) => {
         const msg = JSON.parse(message)
         console.log(msg)
         api.send(msg)
-        // if(msg.get == "settings"){
-        //     console.log("getting settings");
-        //     api.send();
-        // }
-        // if(msg.get == "system_info"){
-        //     console.log("Sending Information");
-        //     api.send(message)
-        // }
-        // if(msg.post == "settings"){
-        //     console.log("IT ACTUALLY WORKED!!! 🥳🥳🥳")
-        // }
     })
 
     client.send(JSON.stringify( { message: 'welcome', value: "Welcome using WebSocket"}))
