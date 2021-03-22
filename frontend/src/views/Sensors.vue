@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="sensorValues">
         <h1>Sensors</h1>
         <p>🌡️ Temperature: {{sensorValues.temperature}}°C</p>
         <p>🌫️ Humidity: {{sensorValues.humidity}}%</p>
