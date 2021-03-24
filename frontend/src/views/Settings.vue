@@ -2,26 +2,10 @@
     <div>
       <h1>Settings</h1>
       <div style="text-align: left; margin: 0 12%;">
-        <h3>Wanted Temperature</h3>
-        <div class="slidecontainer">
-          <input type="range" min="0" max="60" class="slider" step="5" v-model="wantedTemperature">
-          <p>{{ wantedTemperature }}°C</p>
-        </div>
-        <h3>Wanted Temperature Range</h3>
-        <div class="slidecontainer">
-          <input type="range" min="0" max="5" class="slider" step="0.1" v-model="wantedTemperatureRange">
-          <p>{{ wantedTemperatureRange }}°C</p>
-        </div>
-        <h3>Brightness</h3>
-        <div class="slidecontainer">
-          <input type="range" min="0" max="255" class="slider" step="5" v-model="brightness">
-          <p>{{ brightness }}</p>
-        </div>
-        <h3>Display Speed</h3>
-        <div class="slidecontainer">
-          <input type="range" min="0" max="0.150" class="slider" step="0.005" v-model="displaySpeed">
-          <p>{{ displaySpeed }}</p>
-        </div>
+        <SettingsSlider @update-data="updateWantedTemperature" title="Wanted Temperature" min="0" max="60" step="5" unit="°C" :initialValue="wantedTemperature"/>
+        <SettingsSlider @update-data="updatewantedTemperatureRange" title="Wanted Temperature Range" min="0" max="5" step="0.1" unit="°C" :initialValue="wantedTemperatureRange"/>
+        <SettingsSlider @update-data="updateBrightness" title="Brightness" min="0" max="255" step="5" unit="" :initialValue="brightness"/>
+        <SettingsSlider @update-data="updateDisplaySpeed" title="Display Speed" min="0" max="0.150" unit="" step="0.005" :initialValue="displaySpeed"/>
         <h3>Text direction</h3>
         <div class="rotations">
           <button @click="changeDirection(0)">→</button>
@@ -37,7 +21,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import SettingsSlider from '../components/SettingsSlider.vue'
 export default defineComponent({
+  components: {
+    SettingsSlider
+  },
   data() {
     return {
       wantedTemperature: "36.0",
@@ -71,16 +59,24 @@ export default defineComponent({
     },
     changeDirection(angle: number){
       this.rotation = angle;
+    },
+    updateWantedTemperature(value: string){
+      this.wantedTemperature = value
+    },
+    updateWantedTemperatureRange(value: string){
+      this.wantedTemperatureRange = value
+    },
+    updateBrightness(value: string){
+      this.brightness = value
+    },
+    updateDisplaySpeed(value: string){
+      this.displaySpeed = value
     }
   },
 })
 </script>
 
 <style>
-.slider {
-  height: 85px;
-}
-
 .rotations{
   display: flex;
   justify-content: space-around;
@@ -89,13 +85,9 @@ export default defineComponent({
 .rotations > button {
   font-size: 45px;
 }
-.slidecontainer {
-  display: flex;
-}
 #submit {
   margin-bottom: 50px;
   font-size: 30px;
   
 }
-
 </style>
