@@ -3,6 +3,7 @@ import http from 'http'
 import WebSocket from 'ws'
 import { exec } from 'child_process'
 import SenseAppApi from './lib/SenseAppApi'
+import executeShell from './lib/ExecuteShell'
 
 const app: Application = express()
 const server = http.createServer(app)
@@ -20,6 +21,9 @@ wss.on('connection', (client: WebSocket) => {
     client.on('message', (message: string) => {
         const msg = JSON.parse(message)
         console.log(msg)
+        if(msg === 'system_info'){
+            client.send(executeShell("uname -n"))
+        }
         api.send(msg)
     })
 
@@ -32,7 +36,7 @@ wss.on('connection', (client: WebSocket) => {
     })
     
     api.connect();
-
+    
     exec("hostname", (stderr, stdout) => {
         if(stderr) {
             console.error(stderr)

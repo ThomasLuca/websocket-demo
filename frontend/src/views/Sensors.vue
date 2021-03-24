@@ -6,20 +6,20 @@
       unit="°C"
       :maximum="50"
       color="#40FF3F"
-      icon="mdi-thermometer"
+      icon="🌡️"
     />
     <SensorVisual 
       :value="sensorValues.pressure" 
       unit="hPa"
       :maximum="1100"
       :minimum="900"
-      icon="mdi-gauge"
+      icon="🌫️"
     />
     <SensorVisual 
       :value="sensorValues.humidity" 
       unit="%"
       color="#FF473F"
-      icon="l"
+      icon="⬇️"
     />
   </div>
 

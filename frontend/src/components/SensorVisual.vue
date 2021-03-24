@@ -5,7 +5,7 @@
         thickness="20"
         :color="color"
     >
-        <p><i class="mdi" ></i></p>
+        <p><i class="mdi" :class="icon" ></i></p>
         <p>{{ value.toFixed(1) }} {{ unit }}</p>
     </ve-progress>
 </template>
