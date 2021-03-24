@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "regexp": "^1.0.0"
+    "regexp": "^1.0.0",
+    "vue-ellipse-progress": "^2.0.0-beta.1"
   }
 }
