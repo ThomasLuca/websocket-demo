@@ -2,10 +2,11 @@
     <ve-progress
         :progress="calculatedValue"
         angle="90"
-        thickness="20"
+        thickness="15"
+        line="square"
         :color="color"
     >
-        <p><i class="mdi" :class="icon" ></i></p>
+        <p class="icon">{{icon}}</p>
         <p>{{ value.toFixed(1) }} {{ unit }}</p>
     </ve-progress>
 </template>
@@ -45,10 +46,10 @@ export default defineComponent({
 
 <style scoped>
 p {
-    font-size: 200%;
+    font-size: 150%;
     margin: 0px;
 }
-.mdi {
+.icon {
     margin-top: 0px;
     font-size: 200%
 }

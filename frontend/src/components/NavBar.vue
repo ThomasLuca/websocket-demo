@@ -46,5 +46,6 @@ export default defineComponent({
   float: right;
   cursor: default;
   background-color: #26A69A;
+  padding-right: 15px;
 }
 </style>
