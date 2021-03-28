@@ -1,7 +1,6 @@
 import express, {Application, Request, Response} from 'express'
 import http from 'http'
 import WebSocket from 'ws'
-import { exec } from 'child_process'
 import SenseAppApi from './lib/SenseAppApi'
 import executeShell from './lib/ExecuteShell'
 
@@ -37,14 +36,7 @@ wss.on('connection', (client: WebSocket) => {
     })
     
     api.connect();
-    
-    exec("hostname", (stderr, stdout) => {
-        if(stderr) {
-            console.error(stderr)
-        }
-        console.log(stdout)
-        client.send(JSON.stringify( { message: 'hostname', value: stdout}))
-    })
+    executeShell("hostname").then( res => client.send(JSON.stringify( { message: 'hostname', value: res}))) 
 })
 
 function formatSystemInfo(arg: string, key: string){

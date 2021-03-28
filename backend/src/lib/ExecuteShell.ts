@@ -15,22 +15,3 @@ export default async function executeShell(cmd: string) {
     }
     return result.stdout;
 }
-
-// export default function executeShell(cmd: string) {
-//     let msg = 'tst'
-//     exec(cmd, (error: any, stdout: any, stderr: any) => {
-//         if (error) {
-//             console.log(error.message);
-//             msg = error.message
-//         }
-//         if (stderr) {
-//             console.log(stderr);
-//             msg = stderr
-//         }
-//         else {
-//             msg = stdout
-//         }
-//     });
-    
-//     return msg
-// }
