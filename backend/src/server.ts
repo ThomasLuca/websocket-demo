@@ -21,8 +21,10 @@ wss.on('connection', (client: WebSocket) => {
     client.on('message', (message: string) => {
         const msg = JSON.parse(message)
         console.log(msg)
-        if(msg === 'system_info'){
-            client.send(executeShell("uname -n"))
+        if(msg.get[0] === 'system_info'){
+            console.log("tst")
+            console.log(system_info)
+            client.send(JSON.stringify(system_info))
         }
         api.send(msg)
     })
@@ -45,6 +47,20 @@ wss.on('connection', (client: WebSocket) => {
         client.send(JSON.stringify( { message: 'hostname', value: stdout}))
     })
 })
+
+function formatSystemInfo(arg: string, key: string){
+    system_info["system_info"][key] = arg
+}
+
+let system_info: {[key: string]: {[key: string]: string}}= {
+    "system_info": {
+        "hostname": "",
+        "os": ""
+    }
+}
+
+executeShell("hostname").then( res => formatSystemInfo(res.trim(), "hostname"))
+executeShell(`grep '^ID=' /etc/os-release`).then( res => formatSystemInfo(res.trim().replace('ID=', ''), "os"))
 
 server.listen(3000, () => {
     console.log("Listening on port 3000")
