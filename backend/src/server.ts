@@ -21,8 +21,7 @@ wss.on('connection', (client: WebSocket) => {
     client.on('message', (message: string) => {
         const msg = JSON.parse(message)
         console.log(msg)
-        if(msg.get[0] === 'system_info'){
-            console.log("tst")
+        if(msg.get == 'system_info'){
             console.log(system_info)
             client.send(JSON.stringify(system_info))
         }
