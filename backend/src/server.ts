@@ -44,14 +44,17 @@ function formatSystemInfo(arg: string, key: string){
 }
 
 let system_info: {[key: string]: {[key: string]: string}}= {
-    "system_info": {
-        "hostname": "",
-        "os": ""
-    }
+    "system_info": {}
 }
+
 
 executeShell("hostname").then( res => formatSystemInfo(res.trim(), "hostname"))
 executeShell(`grep '^ID=' /etc/os-release`).then( res => formatSystemInfo(res.trim().replace('ID=', ''), "os"))
+executeShell(`hostnamectl | grep "Kernel"`).then( res => formatSystemInfo(res.replace('Kernel:', '').trim(), "kernel"))
+executeShell("uptime -p").then( res => formatSystemInfo(res.replace('up', '').trim(), "uptime"))
+executeShell("python3 --version").then( res => formatSystemInfo(res.replace('Python', '').trim(), "python version"))
+executeShell("node --version").then( res => formatSystemInfo(res.replace('v', '').trim(), "node version"))
+
 
 server.listen(3000, () => {
     console.log("Listening on port 3000")
