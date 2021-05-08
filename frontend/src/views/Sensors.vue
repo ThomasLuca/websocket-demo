@@ -13,13 +13,13 @@
       unit="hPa"
       :maximum="1100"
       :minimum="900"
-      icon="🌫️"
+      icon="⬇️"
     />
     <SensorVisual 
       :value="sensorValues.humidity" 
       unit="%"
       color="#FF473F"
-      icon="⬇️"
+      icon="🌫️"
     />
   </div>
 
