@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>{{ title }}</h3>
+        <h4>{{ title }}</h4>
         <div class="slidecontainer">
           <input type="range" :min="min" :max="max" class="slider" :step="step" v-model="value">
           <p>{{ value }}{{ unit }}</p>
@@ -35,11 +35,21 @@ export default defineComponent({
 </script>
 
 <style>
-.slider {
-  height: 85px;
-}
 .slidecontainer {
-  display: flex;
+    display: grid;
+    grid-template-columns: 90% auto;
+    height: 45px;
+}
+.slider {
+    grid-column-start: 1;
+    height: 45px;
+    margin: auto;
+}
+p {
+    text-align: center;
+    grid-column-start: 2;
+    font-size: 24px;
+    margin: auto;
 }
 
 </style>

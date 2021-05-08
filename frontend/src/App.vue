@@ -42,4 +42,13 @@ p, a{
   font-size: 32px;
 }
 
+* , button{
+  font-family: 'Fira Sans';
+}
+
+button{
+  border-radius: 45px;
+  box-shadow: 5px;
+}
+
 </style>

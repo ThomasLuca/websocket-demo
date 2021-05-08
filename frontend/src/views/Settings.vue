@@ -1,21 +1,43 @@
 <template>
     <div>
       <h1>Settings</h1>
-      <div style="text-align: left; margin: 0 12%;">
-        <SettingsSlider @update-data="updateWantedTemperature" title="Wanted Temperature" min="0" max="60" step="5" unit="°C" :initialValue="wantedTemperature"/>
-        <SettingsSlider @update-data="updatewantedTemperatureRange" title="Wanted Temperature Range" min="0" max="5" step="0.1" unit="°C" :initialValue="wantedTemperatureRange"/>
-        <SettingsSlider @update-data="updateBrightness" title="Brightness" min="0" max="255" step="5" unit="" :initialValue="brightness"/>
-        <SettingsSlider @update-data="updateDisplaySpeed" title="Display Speed" min="0" max="0.150" unit="" step="0.005" :initialValue="displaySpeed"/>
-        <h3>Text direction</h3>
+      <div class="settings-container">
+        <SettingsSlider @update-data="updateWantedTemperature" 
+          title="Wanted Temperature"
+          min="0" max="60" step="1"
+          unit="°C"
+          :initialValue="wantedTemperature"
+        />
+        <SettingsSlider @update-data="updatewantedTemperatureRange" 
+          title="Wanted Temperature Range"
+          min="0" max="5" step="0.1"
+          unit="°C"
+          :initialValue="wantedTemperatureRange"
+        />
+        <SettingsSlider @update-data="updateBrightness" 
+          title="Brightness"
+          min="0" max="255" step="5"
+          unit=""
+          :initialValue="brightness"
+        />
+        <SettingsSlider @update-data="updateDisplaySpeed" 
+          title="Display Speed" min="0" max="0.150" 
+          unit="" 
+          step="0.005" 
+          :initialValue="displaySpeed"
+        />
+        <h4>Text direction</h4>
         <div class="rotations">
-          <button @click="changeDirection(0)">→</button>
-          <button @click="changeDirection(90)">↓</button>
-          <button @click="changeDirection(180)">←</button>
-          <button @click="changeDirection(270)">↑</button>
+          <div class="rotation-buttons">
+            <button @click="changeDirection(0)">→</button>
+            <button @click="changeDirection(90)">↓</button>
+            <button @click="changeDirection(180)">←</button>
+            <button @click="changeDirection(270)">↑</button>
+          </div>
           <p>{{ rotation }}°</p>
         </div>
-        <button @click="submitSettings" id="submit">Submit Settings</button>
       </div>
+      <button @click="submitSettings" id="submit">Submit Settings</button>
     </div>
 </template>
 
@@ -77,17 +99,40 @@ export default defineComponent({
 </script>
 
 <style>
+.settings-container{
+  text-align: left; 
+  margin: 0 12%;
+}
+
 .rotations{
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 90% auto;
+  height: 45px;
   margin-bottom: 40px;
 }
-.rotations > button {
-  font-size: 45px;
+
+.rotation-buttons{
+  display: flex;
+  justify-content: space-around;
 }
+
+.rotations button {
+  grid-column-start: 1;
+  height: 45px;
+  width: 72px;
+  font-size: 24px;
+}
+
+.rotations p {;
+  grid-column-start: 2;
+  font-size: 24px;
+  margin: auto;
+}
+
 #submit {
   margin-bottom: 50px;
   font-size: 30px;
-  
+  width: 50%;
+  height: 50px;
 }
 </style>
