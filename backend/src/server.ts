@@ -48,13 +48,13 @@ let system_info: {[key: string]: {[key: string]: string}}= {
 }
 
 
-executeShell("hostname").then( res => formatSystemInfo(res.trim(), "hostname"))
-executeShell(`grep '^ID=' /etc/os-release`).then( res => formatSystemInfo(res.trim().replace('ID=', ''), "os"))
+executeShell(`ip a | grep " 192." || grep " 172." || grep " 10."`).then( res => formatSystemInfo(res.trim().split(' ')[1], "IPv4 address"))
 executeShell(`hostnamectl | grep "Kernel"`).then( res => formatSystemInfo(res.replace('Kernel:', '').trim(), "kernel"))
 executeShell("uptime -p").then( res => formatSystemInfo(res.replace('up', '').trim(), "uptime"))
 executeShell("python3 --version").then( res => formatSystemInfo(res.replace('Python', '').trim(), "python version"))
 executeShell("node --version").then( res => formatSystemInfo(res.replace('v', '').trim(), "node version"))
-
+executeShell(`grep '^ID=' /etc/os-release`).then( res => formatSystemInfo(res.trim().replace('ID=', ''), "os"))
+executeShell("hostname").then( res => formatSystemInfo(res.trim(), "hostname"))
 
 server.listen(3000, () => {
     console.log("Listening on port 3000")
