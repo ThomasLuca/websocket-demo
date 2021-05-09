@@ -10,16 +10,31 @@ export type State = {
     pressure: number;
     humidity: number;
   };
+  sensorsHistory: {
+    temperature: Array<number>;
+    pressure: Array<number>;
+    humidity: Array<number>;
+  };
 }
 
 export default createStore({
   state: {
     ws: new WebSocket(`ws://${window.location.hostname}:3000`),
+    sensorsHistory: {temperature: [], pressure: [], humidity: []}
   },
   getters: {},
   mutations: {
     updateSensorValues:(state, values) => {
       state.sensors = values
+      if(state.sensorsHistory.temperature.length >= 20){
+        state.sensorsHistory.temperature.shift()
+        state.sensorsHistory.pressure.shift()
+        state.sensorsHistory.humidity.shift()
+      }
+      state.sensorsHistory.temperature.push(values.temperature)
+      state.sensorsHistory.pressure.push(values.pressure)
+      state.sensorsHistory.humidity.push(values.humidity)
+
     },
     updateSettings: (state, settings) => {
       state.settings = settings
