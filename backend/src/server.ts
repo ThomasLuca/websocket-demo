@@ -48,7 +48,14 @@ let system_info: {[key: string]: {[key: string]: string}}= {
 }
 
 
-executeShell(`ip a | grep " 192." || grep " 172." || grep " 10."`).then( res => formatSystemInfo(res.trim().split(' ')[1], "IPv4 address"))
+executeShell(`ip --brief addr | awk '{print $1} {print $3}'`)
+    .then( res => {
+        res = res.trim().split('\n')
+        console.log(res.length)
+        for(let i = 0; i < res.length ; i+=2){
+            formatSystemInfo(res[i+1], res[i])
+        }
+    })
 executeShell(`hostnamectl | grep "Kernel"`).then( res => formatSystemInfo(res.replace('Kernel:', '').trim(), "kernel"))
 executeShell("uptime -p").then( res => formatSystemInfo(res.replace('up', '').trim(), "uptime"))
 executeShell("python3 --version").then( res => formatSystemInfo(res.replace('Python', '').trim(), "python version"))
